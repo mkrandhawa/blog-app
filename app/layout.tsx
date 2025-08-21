@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "../components/Header"; // Import the Header
+import { auth } from "@/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,15 +24,18 @@ export const metadata: Metadata = {
   description: "Blogs that help you learn",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // 3. Fetch the session on the server
+  const session = await auth();
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header /> {/* Add the Header here */}
+        <Header session={session}/> {/* Add the Header here */}
         <main>{children}</main>
       </body>
     </html>
