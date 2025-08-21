@@ -38,6 +38,7 @@ export default function BlogCard({
           alt={`Image for ${title}`}
           width={400}
           height={224}
+          placeholder='blur'
         />
         
         {/* - Added 'flex', 'flex-col', and 'flex-grow' to this div.
