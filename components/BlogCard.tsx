@@ -31,7 +31,7 @@ export default function BlogCard({
 
   return (
     <div className="group relative mx-auto w-full max-w-sm">
-      {/* Skeleton Loader - Absolutely positioned to be on top */}
+      {/* Skeleton Loader*/}
       {isLoading && (
         <div className="absolute inset-0 flex flex-col overflow-hidden rounded-xl bg-white shadow-lg animate-pulse dark:bg-gray-800">
           <div className="h-56 w-full bg-gray-200 dark:bg-gray-700"></div>
@@ -51,7 +51,7 @@ export default function BlogCard({
         </div>
       )}
 
-      {/* Real Card Content - Visually hidden but still in the layout */}
+      {/* Real Card Content */}
       <Link 
         href={`/${category.toLowerCase()}/${slug}`}
         className={`group flex w-full transition-opacity duration-300 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
