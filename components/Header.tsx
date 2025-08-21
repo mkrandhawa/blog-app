@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import type { Session } from 'next-auth'; // 1. Import the Session type
+import { signIn, signOut } from 'next-auth/react'; // 2. Import signIn and signOut
+import Image from 'next/image';
 
 const navigation = [
   {name: 'Home', href: '/'},
@@ -13,7 +16,7 @@ const navigation = [
 
 ];
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -48,11 +51,29 @@ export default function Header() {
           ))}
         </div>
 
-        {/* Login Link */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link href="/login" className="text-m font-semibold leading-6 text-black hover:text-gray-800">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+        {/* Login Link  - Session based conditional rendering*/}
+       <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {session ? (
+            <div className="flex items-center gap-x-4">
+              {session.user?.image && (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name ?? 'User Avatar'}
+                  width={32}
+                  height={32}
+                  className="rounded-full"  
+                />
+              )}
+              <span className="text-m font-semibold leading-6 text-black hover:text-gray-800">{session.user?.name}</span>
+              <button onClick={() => signOut()} className="text-m font-semibold leading-6 text-black hover:text-gray-800 cursor-pointer">
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => signIn('github')} className="text-m font-semibold leading-6 text-black hover:text-gray-800 cursor-pointer">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </button>
+          )}
         </div>
       </nav>
 
