@@ -34,7 +34,7 @@ export default function BlogCard({
         <Image
           // Added 'flex-shrink-0' to prevent the image from shrinking
           className="h-56 w-full flex-shrink-0 object-cover object-center"
-          src={imageUrl}
+          src={imageUrl || '/images/default.png'}
           alt={`Image for ${title}`}
           width={400}
           height={224}

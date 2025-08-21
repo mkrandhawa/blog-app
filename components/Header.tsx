@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import type { Session } from 'next-auth'; // 1. Import the Session type
-import { signIn, signOut } from 'next-auth/react'; // 2. Import signIn and signOut
+import type { Session } from 'next-auth'; // Import the Session type
+import { signOut } from 'next-auth/react'; //Import signIn and signOut
 import Image from 'next/image';
 
 const navigation = [
@@ -18,11 +18,10 @@ const navigation = [
 
 export default function Header({ session }: { session: Session | null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-        {/* Logo (Optional but recommended) */}
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span  className="sr-only">BlogSpot</span>
@@ -64,15 +63,15 @@ export default function Header({ session }: { session: Session | null }) {
                   className="rounded-full"  
                 />
               )}
-              <span className="text-m font-semibold leading-6 text-black hover:text-gray-800">{session.user?.name}</span>
+              <Link className="text-m font-semibold leading-6 text-black hover:text-gray-800" href='/admin'>{session.user?.name}</Link>
               <button onClick={() => signOut()} className="text-m font-semibold leading-6 text-black hover:text-gray-800 cursor-pointer">
                 Sign Out
               </button>
             </div>
           ) : (
-            <button onClick={() => signIn('github')} className="text-m font-semibold leading-6 text-black hover:text-gray-800 cursor-pointer">
+            <Link href="/login" className="text-m font-semibold leading-6 text-black hover:text-gray-800">
               Log in <span aria-hidden="true">&rarr;</span>
-            </button>
+            </Link>
           )}
         </div>
       </nav>
